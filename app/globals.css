@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme inline {
+  /* Primary colors */
+  --color-primary: #4b49ac;
+  --color-secondary: #98bdff;
+
+  /* Supporting colors */
+  --color-accent-light: #7da0fa;
+  --color-accent-medium: #7978e9;
+  --color-accent-coral: #f3797e;
+
+  --color-background: #f5f7ff;
+}
