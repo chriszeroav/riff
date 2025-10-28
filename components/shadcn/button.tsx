@@ -9,15 +9,18 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        default: "bg-primary text-on-primary hover:bg-primary/90",
+        link: "underline",
         none: "",
       },
       size: {
+        default: "h-10 px-4 py-2",
         none: "",
       },
     },
     defaultVariants: {
-      variant: "none",
-      size: "none",
+      variant: "default",
+      size: "default",
     },
   }
 );

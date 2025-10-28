@@ -4,7 +4,10 @@
 @theme inline {
   /* Primary colors */
   --color-primary: #4b49ac;
+  --color-on-primary: #ffffff;
+
   --color-secondary: #98bdff;
+  --color-on-secondary: #000000;
 
   /* Supporting colors */
   --color-accent-light: #7da0fa;
@@ -12,4 +15,5 @@
   --color-accent-coral: #f3797e;
 
   --color-background: #f5f7ff;
+  --color-on-background: #000000;
 }

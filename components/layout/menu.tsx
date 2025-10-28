@@ -21,7 +21,7 @@ export const Menu: FC<MenuProps> = () => {
       )}
     >
       <MenuItem href="/dashboard" label="Dashboard" icon={DashboardIcon} />
-      <MenuItem href="/dashboard/users" label="Users" icon={UsersIcon} />
+      <MenuItem href="/dashboard/usuarios" label="Usuarios" icon={UsersIcon} />
     </aside>
   );
 };

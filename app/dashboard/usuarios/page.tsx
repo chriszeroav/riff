@@ -1,8 +1,13 @@
+import { AddUser } from "@/components/users";
+
 export default function UsersPage() {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Users</h1>
-      <p>This is the users page content.</p>
+    <div className="p-4 grid grid-rows-[auto_1fr] gap-4">
+      <section className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Usuarios</h1>
+        <AddUser />
+      </section>
+      <section></section>
     </div>
   );
 }

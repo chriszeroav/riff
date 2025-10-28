@@ -4,6 +4,7 @@ import { FC } from "react";
 import { Button } from "@/components/shadcn";
 import { MenuIcon } from "lucide-react";
 import { useMenu } from "@/contexts/menu";
+import { SignoutButton } from "@/components/auth";
 
 interface HeaderProps {}
 
@@ -15,6 +16,8 @@ export const Header: FC<HeaderProps> = () => {
       <Button onClick={toggle}>
         <MenuIcon />
       </Button>
+
+      <SignoutButton />
     </header>
   );
 };
