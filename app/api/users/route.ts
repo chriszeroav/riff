@@ -4,33 +4,68 @@ import { createUserSchema } from "@/schemas/users";
 import bcrypt from "bcrypt";
 
 export const GET = auth(async function (request) {
-  if (!request.auth || request.auth.user.role !== "ADMIN") {
+  try {
+    if (!request.auth || request.auth.user.role !== "ADMIN") {
+      return Response.json(
+        {
+          data: null,
+          success: false,
+          error: "Permisos insuficientes",
+        },
+        { status: 403 }
+      );
+    }
+
+    const { searchParams } = new URL(request.url);
+
+    const pageNumber = Number(searchParams.get("page"));
+    const takeNumber = Number(searchParams.get("take"));
+
+    const page = pageNumber > 0 ? pageNumber : 1;
+    const take = takeNumber > 0 ? takeNumber : 10;
+
+    const skip = (page - 1) * take;
+
+    const [users, total] = await prisma.$transaction([
+      prisma.user.findMany({
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          status: true,
+          created_at: true,
+        },
+        skip,
+        take,
+        orderBy: {
+          created_at: "desc",
+        },
+      }),
+      prisma.user.count(),
+    ]);
+
+    return Response.json(
+      {
+        data: {
+          users,
+          total,
+        },
+        success: true,
+        error: null,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
     return Response.json(
       {
         data: null,
         success: false,
-        error: "Permisos insuficientes",
+        error: "Error interno del servidor",
       },
-      { status: 403 }
+      { status: 500 }
     );
   }
-
-  const { searchParams } = new URL(request.url);
-  const page = Number(searchParams.get("page")) || 1;
-  const take = Number(searchParams.get("take")) || 10;
-  console.log(page, take);
-
-  const users = await prisma.user.findMany({
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      role: true,
-      created_at: true,
-    },
-  });
-
-  return Response.json(users);
 });
 
 export const POST = auth(async function (request) {
