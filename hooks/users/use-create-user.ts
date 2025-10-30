@@ -1,4 +1,7 @@
+"use client";
+
 import { AddUserFormValues } from "@/types/users";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
@@ -8,6 +11,7 @@ export const useCreateUser = (): [
   boolean
 ] => {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const createUser = async (values: AddUserFormValues) => {
     setLoading(true);
@@ -25,6 +29,8 @@ export const useCreateUser = (): [
       if (!data.success) {
         throw new Error(data.error);
       }
+
+      router.refresh();
 
       return "Usuario creado exitosamente";
     } catch (error) {

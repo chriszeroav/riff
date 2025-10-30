@@ -1,3 +1,4 @@
+import { ApiResponse, PaginatedData } from "./response";
 import { UserRole } from "@prisma/client";
 
 export interface UserEntity {

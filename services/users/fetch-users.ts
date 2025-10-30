@@ -1,22 +1,32 @@
+"use server";
+
+import { ServiceResponse } from "@/types/response";
 import { UserEntity } from "@/types/users";
 import { format } from "date-fns";
+import { cookies } from "next/headers";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
-export const fetchUsers = async (page: number, take: number) => {
+export const fetchUsers = async (
+  page: number,
+  take: number
+): Promise<ServiceResponse<UserEntity>> => {
   try {
+    const cookieStore = await cookies();
+
     const response = await fetch(`${API_URL}/users?page=${page}&take=${take}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Cookie: cookieStore.toString(),
       },
     });
 
-    const data = await response.json();
+    const json = await response.json();
 
-    if (!data.success) return data;
+    if (!json.success) return json;
 
-    const mappedUsers = data.data.users.map(
+    const mappedUsers = json.data.users.map(
       (user: any): UserEntity => ({
         id: user.id,
         name: user.name,
@@ -31,8 +41,8 @@ export const fetchUsers = async (page: number, take: number) => {
       success: true,
       error: null,
       data: {
-        users: mappedUsers,
-        total: data.data.total,
+        data: mappedUsers,
+        total: json.data.total,
       },
     };
   } catch (error) {
